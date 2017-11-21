@@ -33,7 +33,7 @@ app.get('/', (req, res) => {
       exec(`pwd`, (err, stdout, stderr) => {})
 
       const fileToLoad = fs.readFileSync(`./${imgName}.jpg`)
-      res.writeHead(200, { 'Content-Type': contentType })
+      res.writeHead(200, { 'Content-Type': 'image/jpg' })
       res.end(fileToLoad, 'binary')
     })
     .catch(err => {
