@@ -29,7 +29,7 @@ const takeImage = () => {
 app.get('/', (req, res) => {
   takeImage()
     .then(imageName => {
-      const fileToLoad = fs.readFileSync(`../${file}.jpg`)
+      const fileToLoad = fs.readFileSync(`./${file}.jpg`)
       console.log(file)
       res.writeHead(200, { 'Content-Type': contentType })
       res.end(fileToLoad, 'binary')
