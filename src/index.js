@@ -26,16 +26,16 @@ const takeImage = () => {
   })
 }
 
-app.get('/', async (req, res) => {
-  try {
-    const imageName = await takeImage()
-
-    const fileToLoad = fs.readFileSync(file)
-    res.writeHead(200, { 'Content-Type': contentType })
-    res.end(fileToLoad, 'binary')
-  } catch (e) {
-    return res.send('ajjajj')
-  }
+app.get('/', (req, res) => {
+  takeImage()
+    .then(imageName => {
+      const fileToLoad = fs.readFileSync(file)
+      res.writeHead(200, { 'Content-Type': contentType })
+      res.end(fileToLoad, 'binary')
+    })
+    .catch(() => {
+      return res.send('ajjajj')
+    })
 })
 
 app.listen(PORT, () =>
