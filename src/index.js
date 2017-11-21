@@ -26,13 +26,13 @@ const takeImage = () => {
   })
 }
 
-app.get('/', (req, res) => {
+app.get('/', async (req, res) => {
   try {
-    const imageName = await takeImage();
+    const imageName = await takeImage()
 
-    const fileToLoad = fs.readFileSync(file);
-    res.writeHead(200, {'Content-Type':  contentType });
-    res.end(fileToLoad, 'binary');
+    const fileToLoad = fs.readFileSync(file)
+    res.writeHead(200, { 'Content-Type': contentType })
+    res.end(fileToLoad, 'binary')
   } catch (e) {
     return res.send('ajjajj')
   }
