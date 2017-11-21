@@ -33,8 +33,8 @@ app.get('/', (req, res) => {
       res.writeHead(200, { 'Content-Type': contentType })
       res.end(fileToLoad, 'binary')
     })
-    .catch(() => {
-      return res.send('ajjajj')
+    .catch(err => {
+      return res.send(`ajjjjajaja ${err}`)
     })
 })
 
