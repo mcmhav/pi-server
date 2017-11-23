@@ -10,10 +10,11 @@ const PORT = 80
 const takeImage = () => {
   return new Promise((resolve, reject) => {
     const imgName = randomstring.generate(7)
-    exec(`raspistill -o ${imgName}.jpg`, (err, stdout, stderr) => {
+    // exec(`raspistill -o ${imgName}.jpg`, (err, stdout, stderr) => {
+    exec(`../rollTheDice.sh`, (err, stdout, stderr) => {
       if (err) {
         // node couldn't execute the command
-        reject()
+        reject(err)
         return
       }
 
@@ -21,7 +22,7 @@ const takeImage = () => {
       console.log(`stdout: ${stdout}`)
       console.log(`stderr: ${stderr}`)
 
-      resolve(imgName)
+      resolve('image')
     })
   })
 }
@@ -32,7 +33,8 @@ app.get('/', (req, res) => {
       console.log(`./${imgName}.jpg`)
       exec(`pwd`, (err, stdout, stderr) => {})
 
-      const fileToLoad = fs.readFileSync(`./${imgName}.jpg`)
+      // const fileToLoad = fs.readFileSync(`./${imgName}.jpg`)
+      const fileToLoad = fs.readFileSync(`../pi-sense/${imgName}.jpg`)
       res.writeHead(200, { 'Content-Type': 'image/jpg' })
       res.end(fileToLoad, 'binary')
     })
