@@ -11,7 +11,7 @@ const takeImage = () => {
   return new Promise((resolve, reject) => {
     const imgName = randomstring.generate(7)
     // exec(`raspistill -o ${imgName}.jpg`, (err, stdout, stderr) => {
-    exec(`../rollTheDice.sh`, (err, stdout, stderr) => {
+    exec(`../scripts/rollTheDice.sh`, (err, stdout, stderr) => {
       if (err) {
         // node couldn't execute the command
         reject(err)
