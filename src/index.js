@@ -18,7 +18,7 @@ const takeImage = () => {
       console.log(`stdout: ${stdout}`)
       console.log(`stderr: ${stderr}`)
     })
-    exec(`../scripts/rollTheDice.sh`, (err, stdout, stderr) => {
+    exec(`./scripts/rollTheDice.sh`, (err, stdout, stderr) => {
       if (err) {
         // node couldn't execute the command
         reject(err)
