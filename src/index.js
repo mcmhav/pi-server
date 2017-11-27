@@ -52,7 +52,7 @@ const showMessage = (msg = 'hello world') => {
 app.get('/message', (req, res) => {
   const { msg } = req.query
   showMessage(msg)
-  return res.send(`ajjjjajaja ${msg}`)
+  return res.send(`showing msg: ${msg}`)
 })
 
 app.get('/', (req, res) => {
