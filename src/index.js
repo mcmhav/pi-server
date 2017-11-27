@@ -55,6 +55,29 @@ app.get('/message', (req, res) => {
   return res.send(`showing msg: ${msg}`)
 })
 
+const triggerPixelate = () => {
+  return new Promise((resolve, reject) => {
+    exec(`python packages/pi-sense/pixelate.py`, (err, stdout, stderr) => {
+      if (err) {
+        // node couldn't execute the command
+        reject(err)
+        return
+      }
+
+      // the *entire* stdout and stderr (buffered)
+      console.log(`stdout: ${stdout}`)
+      console.log(`stderr: ${stderr}`)
+
+      resolve('image')
+    })
+  })
+}
+
+app.get('/pixelateImage', (req, res) => {
+  triggerPixelate()
+  return res.send(`doing image stuff`)
+})
+
 app.get('/', (req, res) => {
   takeImage()
     .then(imgName => {
