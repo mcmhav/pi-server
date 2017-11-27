@@ -11,13 +11,7 @@ const takeImage = () => {
   return new Promise((resolve, reject) => {
     const imgName = randomstring.generate(7)
     // exec(`raspistill -o ${imgName}.jpg`, (err, stdout, stderr) => {
-    exec(`pwd`, (err, stdout, stderr) => {
-      if (err) {
-        return
-      }
-      console.log(`stdout: ${stdout}`)
-      console.log(`stderr: ${stderr}`)
-    })
+
     exec(`./scripts/rollTheDice.sh`, (err, stdout, stderr) => {
       if (err) {
         // node couldn't execute the command
@@ -34,14 +28,34 @@ const takeImage = () => {
   })
 }
 
+const showMessage = () => {
+  return new Promise((resolve, reject) => {
+    exec(`python packages/pi-sense/message.py`, (err, stdout, stderr) => {
+      if (err) {
+        // node couldn't execute the command
+        reject(err)
+        return
+      }
+
+      // the *entire* stdout and stderr (buffered)
+      console.log(`stdout: ${stdout}`)
+      console.log(`stderr: ${stderr}`)
+
+      resolve('image')
+    })
+  })
+}
+
+app.get('/message', (req, res) => {
+  showMessage()
+})
+
 app.get('/', (req, res) => {
   takeImage()
     .then(imgName => {
       console.log(`./${imgName}.jpg`)
-      exec(`pwd`, (err, stdout, stderr) => {})
-
       // const fileToLoad = fs.readFileSync(`./${imgName}.jpg`)
-      const fileToLoad = fs.readFileSync(`../pi-sense/${imgName}.jpg`)
+      const fileToLoad = fs.readFileSync(`./packages/pi-sense/${imgName}.jpg`)
       res.writeHead(200, { 'Content-Type': 'image/jpg' })
       res.end(fileToLoad, 'binary')
     })
