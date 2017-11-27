@@ -78,6 +78,29 @@ app.get('/pixelateImage', (req, res) => {
   return res.send(`doing image stuff`)
 })
 
+const triggerTemp = () => {
+  return new Promise((resolve, reject) => {
+    exec(`python packages/pi-sense/temperature.py`, (err, stdout, stderr) => {
+      if (err) {
+        // node couldn't execute the command
+        reject(err)
+        return
+      }
+
+      // the *entire* stdout and stderr (buffered)
+      console.log(`stdout: ${stdout}`)
+      console.log(`stderr: ${stderr}`)
+
+      resolve()
+    })
+  })
+}
+
+app.get('/temp', (req, res) => {
+  triggerTemp()
+  return res.send(`doing tmp stuff`)
+})
+
 app.get('/', (req, res) => {
   takeImage()
     .then(imgName => {
