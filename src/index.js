@@ -31,7 +31,7 @@ const takeImage = () => {
 const showMessage = msg => {
   return new Promise((resolve, reject) => {
     exec(
-      `python packages/pi-sense/message.py ${msg}`,
+      `python packages/pi-sense/message.py --message="${msg}"`,
       (err, stdout, stderr) => {
         if (err) {
           // node couldn't execute the command
