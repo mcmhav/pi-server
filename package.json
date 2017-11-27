@@ -3,7 +3,8 @@
   "description": "A pi-server",
   "version": "0.0.1",
   "scripts": {
-    "start": "node src/index.js"
+    "start": "node src/index.js",
+    "install": "./scripts/install.sh -f"
   },
   "dependencies": {
     "express": "^4.16.2",

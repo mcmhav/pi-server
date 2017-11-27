@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
-cd ../pi-sense || exit
+cd ./packages/pi-sense || exit
 
 python randomDice.py
