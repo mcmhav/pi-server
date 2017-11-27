@@ -46,6 +46,7 @@ pullOrClone() {
 # }
 
 installs() {
+  git pull
   pullOrClone
 }
 

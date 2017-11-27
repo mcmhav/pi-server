@@ -28,26 +28,30 @@ const takeImage = () => {
   })
 }
 
-const showMessage = () => {
+const showMessage = msg => {
   return new Promise((resolve, reject) => {
-    exec(`python packages/pi-sense/message.py`, (err, stdout, stderr) => {
-      if (err) {
-        // node couldn't execute the command
-        reject(err)
-        return
+    exec(
+      `python packages/pi-sense/message.py ${msg}`,
+      (err, stdout, stderr) => {
+        if (err) {
+          // node couldn't execute the command
+          reject(err)
+          return
+        }
+
+        // the *entire* stdout and stderr (buffered)
+        console.log(`stdout: ${stdout}`)
+        console.log(`stderr: ${stderr}`)
+
+        resolve('image')
       }
-
-      // the *entire* stdout and stderr (buffered)
-      console.log(`stdout: ${stdout}`)
-      console.log(`stderr: ${stderr}`)
-
-      resolve('image')
-    })
+    )
   })
 }
 
 app.get('/message', (req, res) => {
-  showMessage()
+  const { msg } = req.query
+  showMessage(msg)
 })
 
 app.get('/', (req, res) => {
