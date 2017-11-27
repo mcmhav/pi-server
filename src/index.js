@@ -28,7 +28,7 @@ const takeImage = () => {
   })
 }
 
-const showMessage = msg => {
+const showMessage = (msg = 'hello world') => {
   return new Promise((resolve, reject) => {
     exec(
       `python packages/pi-sense/message.py --message="${msg}"`,
