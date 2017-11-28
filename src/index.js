@@ -2,10 +2,11 @@ const express = require('express')
 const fs = require('fs')
 const { exec } = require('child_process')
 const randomstring = require('randomstring')
+const fetch = require('node-fetch')
 
 const app = express()
 
-const PORT = 80
+const PORT = 5000
 
 const takeImage = () => {
   return new Promise((resolve, reject) => {
@@ -122,6 +123,33 @@ const triggerAcc = () => {
 app.get('/accelerometer', (req, res) => {
   triggerAcc()
   return res.send(`doing tmp stuff`)
+})
+
+const btcValue = () => {
+  return new Promise((resolve, reject) => {
+    fetch('https://api.coindesk.com/v1/bpi/currentprice.json')
+      .then(res => {
+        return res.json()
+      })
+      .then(res => {
+        console.log(res)
+        console.log(res.bpi.USD.rate)
+        resolve(res.bpi.USD.rate)
+      })
+      .catch(err => {
+        reject(err)
+      })
+  })
+}
+
+app.get('/btcValue', (req, res) => {
+  btcValue()
+    .then(value => {
+      return res.send(`bct val: ${value}`)
+    })
+    .catch(err => {
+      return res.send(`bct val: ${err}`)
+    })
 })
 
 app.get('/', (req, res) => {
