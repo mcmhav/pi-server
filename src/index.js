@@ -127,14 +127,12 @@ app.get('/accelerometer', (req, res) => {
 
 const btcValue = () => {
   return new Promise((resolve, reject) => {
-    fetch('https://api.coindesk.com/v1/bpi/currentprice.json')
+    fetch('https://api.bitfinex.com/v1/pubticker/btcusd')
       .then(res => {
         return res.json()
       })
       .then(res => {
-        console.log(res)
-        console.log(res.bpi.USD.rate)
-        resolve(res.bpi.USD.rate)
+        resolve(res.mid)
       })
       .catch(err => {
         reject(err)
